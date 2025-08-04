@@ -1,16 +1,14 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import LandingPage from "./Components/Landing/LandingPage";
-import Loginsignup from "./Components/LoginSignUp/Loginsignup";
 
+import LandingPage from "./Components/Landing/LandingPage";
+
+
+import './App.css'
 
 function App() {
   return (
-     <Router>
-      <Routes>
-        <Route path="/" element={<Loginsignup />} />
-        <Route path="/landing" element={<LandingPage />} />
-      </Routes>
-    </Router>
+    <div>
+      <LandingPage />
+    </div>
   );
 }
 
