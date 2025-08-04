@@ -1,0 +1,1 @@
+A job board platform is a web application where employers can post job openings and job seekers can search, view, and apply for jobs. The platform should deliver a seamless and intuitive user experience for both employers and job seekers
