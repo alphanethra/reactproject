@@ -1,7 +1,15 @@
 import React from "react";
 import "./LandingPage.css";
+import { useEffect } from "react";
 
 const LandingPage = () => {
+   useEffect(() => {
+    document.body.style.background='none';
+    document.body.style.backgroundColor = '#232020ff'; 
+    return () => {
+      document.body.style.backgroundColor = '';
+    };
+  }, []);
   return (
     <div className="landing-container">
       <header className="landing-header">
