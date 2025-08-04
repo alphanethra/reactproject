@@ -1,0 +1,75 @@
+.landing-container {
+  max-width: 900px;
+  margin: 60px auto;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-align: center;
+}
+
+.landing-header h1 {
+  font-size: 3rem;
+  margin-bottom: 10px;
+  color: #0077cc;
+}
+
+.landing-header p {
+  font-size: 1.2rem;
+  color: #555;
+  margin-bottom: 40px;
+}
+
+.landing-buttons {
+  margin-bottom: 50px;
+}
+
+.btn {
+  font-size: 1rem;
+  padding: 12px 30px;
+  margin: 0 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  color: #fff;
+}
+
+.employer-btn {
+  background-color: #28a745;
+}
+
+.employer-btn:hover {
+  background-color: #1e7e34;
+}
+
+.seeker-btn {
+  background-color: #007bff;
+}
+
+.seeker-btn:hover {
+  background-color: #0056b3;
+}
+
+.features {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.feature-item {
+  background-color: #f0f8ff;
+  border-radius: 10px;
+  padding: 25px;
+  width: 250px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+}
+
+.feature-item h3 {
+  color: #0077cc;
+  margin-bottom: 12px;
+}
+
+.feature-item p {
+  color: #444;
+  font-size: 1rem;
+}
