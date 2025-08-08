@@ -56,6 +56,7 @@ body
 
 .input img {
     margin: 0px 30px;
+
 }
 
 .input input {
@@ -91,3 +92,19 @@ body
     background: #EAEAEA;
     color: #676767;
 }
+#id1 input[type="checkbox"] {
+  transform: scale(0.5); /* Increases size */
+  margin: 10px; 
+  position: relative;
+  right:142px          /* Optional: adds space around */
+}
+
+#id2
+{
+    position: relative;
+    right:285px ;
+     color: #797979;
+    font-size: 19px;
+  
+}
+

@@ -24,7 +24,7 @@ const LandingPage = () => {
       <div className="landing-buttons">
         <button
           className="btn employer-btn"
-          onClick={() => navigate("/post-job")}
+          onClick={() => navigate("/")}
         >
           Post a Job
         </button>

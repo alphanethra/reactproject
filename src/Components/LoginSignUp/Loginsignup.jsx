@@ -17,6 +17,7 @@ function Loginsignup() {
    const navigate = useNavigate();
   const [action, setaction] = useState("Sign Up");
   const [username,setusername]=useState("");
+  const[checked,setchecked]=useState(false)
    const [email,setemail]=useState("");
     const [password,setpassword]=useState("");
  const Landing = () => {
@@ -28,7 +29,7 @@ function Loginsignup() {
       const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
       if(regex.test(email) && password.length>=8)
       {
-      navigate('/landing');
+      navigate('/post-job');
       }
       else 
       {
@@ -44,7 +45,7 @@ function Loginsignup() {
     {
       if(username.length>=3 && password.length>=8 && regex.test(email))
       {
-         navigate('/landing');
+         navigate('/post-job');
       }
       else
       {
@@ -75,7 +76,7 @@ const setpasswordhandler=(e)=>
   return (
     <div className='container'>
       <div className="header">
-        <div className="test">{action}</div>
+        <div onClick={()=>{radiohandler()}} className="test">{action}</div>
         <div className="underline"></div>
       </div>
 
@@ -96,8 +97,12 @@ const setpasswordhandler=(e)=>
           <img src={password_icon} alt="" />
           <input type="password" placeholder='Password' value={password} onChange={(e)=>setpasswordhandler(e)} required/>
         </div>
+         <div id='id1' className="input">
+        <input id='id5' checked={checked} type='checkbox' onChange={()=>{setchecked(!checked);console.log(checked)}} />
+         <label  id='id2'>I am a Job Seeker</label>
       </div>
-
+      </div>
+     
       <div className="submit-container">
         <div
           className={action === "Login" ? "submit gray" : "submit"}
