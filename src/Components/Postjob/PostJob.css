@@ -1,0 +1,29 @@
+.post-job-container {
+  max-width: 500px;
+  margin: 40px auto;
+  background: #fff;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  padding: 30px;
+  border-radius: 10px;
+}
+.post-job-form input,
+.post-job-form textarea {
+  display: block;
+  width: 100%;
+  margin-bottom: 18px;
+  padding: 12px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+.post-job-form button {
+  background: #006400;
+  color: #fff;
+  border: none;
+  padding: 12px 24px;
+  font-size: 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.post-job-form button:hover {
+  background: #008f00;
+}
