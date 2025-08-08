@@ -1,15 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./LandingPage.css";
-import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const LandingPage = () => {
-   useEffect(() => {
-    document.body.style.background='none';
-    document.body.style.backgroundColor = '#232020ff'; 
+  // <-- useNavigate must be called inside the function component
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    document.body.style.background = "none";
+    document.body.style.backgroundColor = "#232020ff";
     return () => {
-      document.body.style.backgroundColor = '';
+      document.body.style.backgroundColor = "";
     };
   }, []);
+
   return (
     <div className="landing-container">
       <header className="landing-header">
@@ -18,7 +22,12 @@ const LandingPage = () => {
       </header>
 
       <div className="landing-buttons">
-        <button className="btn employer-btn">Post a Job</button>
+        <button
+          className="btn employer-btn"
+          onClick={() => navigate("/post-job")}
+        >
+          Post a Job
+        </button>
         <button className="btn seeker-btn">Find Jobs</button>
       </div>
 
