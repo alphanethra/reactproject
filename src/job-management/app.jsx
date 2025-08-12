@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import Login from "./Login";
-import EmployerJobManagement from "./EmployerJobManagement";
+import Login from "./login";
+import EmployerJobManagement from "./employerjobmanagement";
 import "./App.css";
 
 export default function App() {
