@@ -38,7 +38,7 @@ function Loginsignup() {
       });
       if(response.data==true)
       {
-        navigate('/postjob');
+        navigate('/landing');
       }
       else
       {
@@ -59,7 +59,7 @@ function Loginsignup() {
     {
       if(username.length>=3 && password.length>=8 && regex.test(email))
       {
-         navigate('/postjob');
+         navigate('/landing');
           Axios.post('http://localhost:3000/submit',{
           username:username,
           useremail:email,
