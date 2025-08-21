@@ -10,7 +10,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Loginsignup />} />
         <Route path="/landing" element={<LandingPage />} />
-         <Route path="/post-job" element={<PostJob />} />
+         <Route path="/postjob" element={<PostJob />} />
       </Routes>
     </Router>
   );

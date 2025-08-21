@@ -4,7 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import user_icon from '../Assets/person.png';
 import email_icon from '../Assets/email.png';
 import password_icon from '../Assets/password.png';
+import Axios from 'axios'
 import { useEffect } from 'react';
+import axios from 'axios';
 
 function Loginsignup() {
 
@@ -20,7 +22,7 @@ function Loginsignup() {
   const[checked,setchecked]=useState(false)
    const [email,setemail]=useState("");
     const [password,setpassword]=useState("");
- const Landing = () => {
+ const Landing = async() => {
  const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   if(action=='Login')
   {
@@ -29,7 +31,19 @@ function Loginsignup() {
       const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
       if(regex.test(email) && password.length>=8)
       {
-      navigate('/post-job');
+       const response=await Axios.post("http://localhost:3000/login",{
+        username:username,
+        useremail:email,
+        userpassword:password,
+      });
+      if(response.data==true)
+      {
+        navigate('/postjob');
+      }
+      else
+      {
+        window.alert("Incorrect email or password");
+      }
       }
       else 
       {
@@ -45,7 +59,13 @@ function Loginsignup() {
     {
       if(username.length>=3 && password.length>=8 && regex.test(email))
       {
-         navigate('/post-job');
+         navigate('/postjob');
+          Axios.post('http://localhost:3000/submit',{
+          username:username,
+          useremail:email,
+          userpassword:password,
+          userrole:checked
+         }).then(()=>{console.log("Sucess")}).catch((err)=>{console.log(err)});
       }
       else
       {
@@ -84,21 +104,21 @@ const setpasswordhandler=(e)=>
         {action === "Sign Up" && (
           <div className="input">
             <img src={user_icon} alt="" />
-            <input type="text" placeholder='Name' value={username} onChange={(e)=>setusernamehandler(e)}  required/>
+            <input name='username' type="text" placeholder='Name' value={username} onChange={(e)=>setusernamehandler(e)}  required/>
           </div>
         )}
 
         <div className="input">
           <img src={email_icon} alt="" />
-          <input type="email" placeholder='Email Id' value={email} onChange={(e)=>setemailhandler(e)} required />
+          <input name='useremail' type="email" placeholder='Email Id' value={email} onChange={(e)=>setemailhandler(e)} required />
         </div>
 
         <div className="input">
           <img src={password_icon} alt="" />
-          <input type="password" placeholder='Password' value={password} onChange={(e)=>setpasswordhandler(e)} required/>
+          <input name='userpassword' type="password" placeholder='Password' value={password} onChange={(e)=>setpasswordhandler(e)} required/>
         </div>
          <div id='id1' className="input">
-        <input id='id5' checked={checked} type='checkbox' onChange={()=>{setchecked(!checked);console.log(checked)}} />
+        <input name='userrole' id='id5' checked={checked} type='checkbox' onChange={()=>{setchecked(!checked);console.log(checked)}} />
          <label  id='id2'>I am a Job Seeker</label>
       </div>
       </div>
