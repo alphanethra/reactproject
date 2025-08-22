@@ -1,51 +1,31 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Findjob.css';
+import axios from 'axios';
 
-const jobs = [
-  {
-    _id: "1",
-    jobtitle: "Frontend Developer",
-    company: "Tech Solutions",
-    location: "Remote",
-    jobtype: "Full Time",
-    salary: "₹10,00,000",
-    description: "Build modern UIs with React, collaborate with backend teams, and optimize for performance.",
-  },
-  {
-    _id: "2",
-    jobtitle: "Backend Engineer",
-    company: "CodeWorks",
-    location: "Bangalore",
-    jobtype: "Part Time",
-    salary: "₹6,00,000",
-    description: "Design scalable REST APIs, integrate databases like MongoDB, and ensure security of endpoints.",
-  },
-  {
-    _id: "3",
-    jobtitle: "UI/UX Designer",
-    company: "Creative Minds",
-    location: "Hyderabad",
-    jobtype: "Contract",
-    salary: "₹5,00,000",
-    description: "Create wireframes, design intuitive interfaces, and work with product teams for user testing.",
-  }
-];
-
-const jobTypes = [
-  "All",
-  "Full Time",
-  "Part Time",
-  "Contract"
-];
+const jobTypes = ["All", "Full Time", "Part Time", "Contract","Internship"];
 
 const FindJobs = () => {
+  const [jobs, setJobs] = useState([]);          
+  const [filteredJobs, setFilteredJobs] = useState([]); 
   const [search, setSearch] = useState("");
   const [location, setLocation] = useState("All");
   const [role, setRole] = useState("All");
-  const [filteredJobs, setFilteredJobs] = useState(jobs);
 
-  // Apply filter and search when criteria change
-  React.useEffect(() => {
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await axios.get("http://localhost:3000/find");
+        setJobs(res.data);       
+        setFilteredJobs(res.data); 
+      } catch (err) {
+        console.error("Error fetching jobs:", err);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  useEffect(() => {
     let result = jobs;
 
     if (search.trim()) {
@@ -66,9 +46,9 @@ const FindJobs = () => {
     }
 
     setFilteredJobs(result);
-  }, [search, location, role]);
+  }, [search, location, role, jobs]);
 
-  // Extract unique locations for dropdown
+
   const uniqueLocations = ["All", ...Array.from(new Set(jobs.map(job => job.location)))];
 
   return (
@@ -82,25 +62,18 @@ const FindJobs = () => {
           onChange={e => setSearch(e.target.value)}
           style={{ padding: "0.5rem", borderRadius: "4px", border: "1px solid #ccc", flex: "2" }}
         />
-        <select
-          value={location}
-          onChange={e => setLocation(e.target.value)}
-          style={{ padding: "0.5rem", borderRadius: "4px", border: "1px solid #ccc" }}
-        >
+        <select value={location} onChange={e => setLocation(e.target.value)}>
           {uniqueLocations.map(loc => (
             <option key={loc} value={loc}>{loc}</option>
           ))}
         </select>
-        <select
-          value={role}
-          onChange={e => setRole(e.target.value)}
-          style={{ padding: "0.5rem", borderRadius: "4px", border: "1px solid #ccc" }}
-        >
+        <select value={role} onChange={e => setRole(e.target.value)}>
           {jobTypes.map(type => (
             <option key={type} value={type}>{type}</option>
           ))}
         </select>
       </div>
+
       {filteredJobs.length === 0 ? (
         <p>No jobs match your criteria.</p>
       ) : (
