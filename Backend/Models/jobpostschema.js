@@ -32,4 +32,5 @@ const jobpost=mongoose.Schema(
             timestamps:true
         }
     
-)
+);
+module.exports=mongoose.model("jobpost",jobpost);
