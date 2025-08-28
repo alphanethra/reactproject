@@ -3,7 +3,7 @@ import LandingPage from "./Components/Landing/LandingPage";
 import Loginsignup from "./Components/LoginSignUp/Loginsignup";
 import PostJob from "./Components/Postjob/PostJob";
 import FindJobs from './Components/findjob/Findjob';
-import JobManagement from './Components/JobManagements/jobmanagement';
+import JobManagement from './Components/JobManagement/jobmanagement';
 
 function App() {
   return (
