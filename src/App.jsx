@@ -3,7 +3,7 @@ import LandingPage from "./Components/Landing/LandingPage";
 import Loginsignup from "./Components/LoginSignUp/Loginsignup";
 import PostJob from "./Components/Postjob/PostJob";
 import FindJobs from './Components/findjob/Findjob';
-
+import JobManagement from './Components/JobManagement/jobmanagement';
 
 function App() {
   return (
@@ -13,7 +13,7 @@ function App() {
         <Route path="/landing" element={<LandingPage />} />
          <Route path="/postjob" element={<PostJob />} />
          <Route path="/findjobs" element={<FindJobs />} />
-
+          <Route path="/jobmanagement" element={<JobManagement />} />
       </Routes>
     </Router>
   );
