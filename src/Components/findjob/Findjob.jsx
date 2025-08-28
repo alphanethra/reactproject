@@ -11,7 +11,7 @@ const FindJobs = () => {
   const [location, setLocation] = useState("All");
   const [role, setRole] = useState("All");
 
-  // Form States
+  // Form States (only for editing)
   const [formData, setFormData] = useState({
     jobtitle: "",
     company: "",
@@ -71,29 +71,25 @@ const FindJobs = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Add / Update Job
+  // Update Job (Edit + Submit)
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       if (editingJob) {
         await axios.put(`http://localhost:3000/jobs/${editingJob._id}`, formData);
-      } else {
-        await axios.post("http://localhost:3000/jobs", formData);
+        fetchJobs();
+        setEditingJob(null);
+        setFormData({
+          jobtitle: "",
+          company: "",
+          location: "",
+          jobtype: "Full Time",
+          salary: "",
+          description: "",
+        });
       }
-
-      fetchJobs();
-      setFormData({
-        jobtitle: "",
-        company: "",
-        location: "",
-        jobtype: "Full Time",
-        salary: "",
-        description: "",
-      });
-      setEditingJob(null);
     } catch (err) {
-      console.error("Error saving job:", err);
+      console.error("Error updating job:", err);
     }
   };
 
@@ -117,56 +113,62 @@ const FindJobs = () => {
     <div className="findjobs-container">
       <h2 className="findjobs-title">Find Jobs</h2>
 
-      {/* Job Form */}
-      <form onSubmit={handleSubmit} className="job-form">
-        <input
-          type="text"
-          name="jobtitle"
-          placeholder="Job Title"
-          value={formData.jobtitle}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="text"
-          name="company"
-          placeholder="Company"
-          value={formData.company}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="text"
-          name="location"
-          placeholder="Location"
-          value={formData.location}
-          onChange={handleChange}
-          required
-        />
-        <select name="jobtype" value={formData.jobtype} onChange={handleChange}>
-          {jobTypes.slice(1).map((type) => (
-            <option key={type} value={type}>
-              {type}
-            </option>
-          ))}
-        </select>
-        <input
-          type="number"
-          name="salary"
-          placeholder="Salary"
-          value={formData.salary}
-          onChange={handleChange}
-          required
-        />
-        <textarea
-          name="description"
-          placeholder="Job Description"
-          value={formData.description}
-          onChange={handleChange}
-          required
-        />
-        <button type="submit">{editingJob ? "Update Job" : "Add Job"}</button>
-      </form>
+      {/* Job Form (only visible when editing) */}
+      {editingJob && (
+        <form onSubmit={handleSubmit} className="job-form">
+          <input
+            type="text"
+            name="jobtitle"
+            placeholder="Job Title"
+            value={formData.jobtitle}
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="text"
+            name="company"
+            placeholder="Company"
+            value={formData.company}
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="text"
+            name="location"
+            placeholder="Location"
+            value={formData.location}
+            onChange={handleChange}
+            required
+          />
+          <select
+            name="jobtype"
+            value={formData.jobtype}
+            onChange={handleChange}
+          >
+            {jobTypes.slice(1).map((type) => (
+              <option key={type} value={type}>
+                {type}
+              </option>
+            ))}
+          </select>
+          <input
+            type="number"
+            name="salary"
+            placeholder="Salary"
+            value={formData.salary}
+            onChange={handleChange}
+            required
+          />
+          <textarea
+            name="description"
+            placeholder="Job Description"
+            value={formData.description}
+            onChange={handleChange}
+            required
+          />
+          <button type="submit">Update Job</button>
+        </form>
+      )}
 
       {/* Search Filters */}
       <div
@@ -233,5 +235,6 @@ const FindJobs = () => {
 };
 
 export default FindJobs;
+
 
 
