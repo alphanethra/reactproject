@@ -1,17 +1,25 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import LandingPage from "./Components/Landing/LandingPage";
-import Loginsignup from "./Components/LoginSignUp/Loginsignup";
-import PostJob from "./Components/Postjob/PostJob";
-import FindJobs from './Components/findjob/Findjob';
-import Navbar from './Components/shared/Navbar';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import Home from './Components/Home';
+import Login from './Components/auth/Login';
+import Signup from './Components/auth/Signup';
+
+const appRouter = createBrowserRouter([
+  {
+    path: '/',
+    element: <Home />,
+  },
+  {
+    path: '/login',   // URL will be /login
+    element: <Login />,
+  },
+  {
+    path: '/signup',  // URL will be /signup
+    element: <Signup />,
+  },
+]);
 
 function App() {
-  return (
-        <div>
-        <Navbar/>
-        </div>
-    
-  );
+  return <RouterProvider router={appRouter} />;
 }
 
-export default App
+export default App;
