@@ -3,19 +3,14 @@ import LandingPage from "./Components/Landing/LandingPage";
 import Loginsignup from "./Components/LoginSignUp/Loginsignup";
 import PostJob from "./Components/Postjob/PostJob";
 import FindJobs from './Components/findjob/Findjob';
-
+import Navbar from './Components/shared/Navbar';
 
 function App() {
   return (
-     <Router>
-      <Routes>
-        <Route path="/" element={<Loginsignup />} />
-        <Route path="/landing" element={<LandingPage />} />
-         <Route path="/postjob" element={<PostJob />} />
-         <Route path="/findjobs" element={<FindJobs />} />
-
-      </Routes>
-    </Router>
+        <div>
+        <Navbar/>
+        </div>
+    
   );
 }
 
