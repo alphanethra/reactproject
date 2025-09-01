@@ -1,7 +1,7 @@
 import { v2 as cloudinary } from 'cloudinary';
-cloudinary.config({ 
-        cloud_name: 'dtc1a21fu', 
-        api_key: '582952732455589', 
-        api_secret: 'ogxtROSlZ-X0DmfRDQzInbbPw8w' // Click 'View API Keys' above to copy your API secret
-    });
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.API_KEY,
+  api_secret: process.env.API_SECRET,
+});
 export default cloudinary
