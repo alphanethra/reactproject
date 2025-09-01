@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
-import Navbar from './shared/Navbar'
-import { Avatar, AvatarImage } from './ui/avatar'
-import { Button } from './ui/button'
+import Navbar from '../shared/Navbar'
+import { Avatar, AvatarImage } from './avatar'
+import { Button } from './button'
 import { Contact, Mail, Pen } from 'lucide-react'
-import { Badge } from './ui/badge'
-import { Label } from './ui/label'
+import { Badge } from './badge'
+import { Label } from './label'
 import AppliedJobTable from './AppliedJobTable'
 import UpdateProfileDialog from './UpdateProfileDialog'
 import { useSelector } from 'react-redux'
-import useGetAppliedJobs from '@/hooks/useGetAppliedJobs'
+import useGetAppliedJobs from '@/hooks/useGetAllAppliedJobs'
 
 // const skills = ["Html", "Css", "Javascript", "Reactjs"]
 const isResume = true;
