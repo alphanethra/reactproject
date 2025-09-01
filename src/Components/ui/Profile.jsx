@@ -1,85 +1,72 @@
-import React, { useEffect, useState } from 'react'
-import { Badge } from './ui/badge'
+import React, { useState } from 'react'
+import Navbar from './shared/Navbar'
+import { Avatar, AvatarImage } from './ui/avatar'
 import { Button } from './ui/button'
-import { useParams } from 'react-router-dom';
-import axios from 'axios';
-import { APPLICATION_API_END_POINT, JOB_API_END_POINT } from '@/utils/constant';
-import { setSingleJob } from '@/redux/jobSlice';
-import { useDispatch, useSelector } from 'react-redux';
-import { toast } from 'sonner';
+import { Contact, Mail, Pen } from 'lucide-react'
+import { Badge } from './ui/badge'
+import { Label } from './ui/label'
+import AppliedJobTable from './AppliedJobTable'
+import UpdateProfileDialog from './UpdateProfileDialog'
+import { useSelector } from 'react-redux'
+import useGetAppliedJobs from '@/hooks/useGetAppliedJobs'
 
-const JobDescription = () => {
-    const {singleJob} = useSelector(store => store.job);
+// const skills = ["Html", "Css", "Javascript", "Reactjs"]
+const isResume = true;
+
+const Profile = () => {
+    useGetAppliedJobs();
+    const [open, setOpen] = useState(false);
     const {user} = useSelector(store=>store.auth);
-    const isIntiallyApplied = singleJob?.applications?.some(application => application.applicant === user?._id) || false;
-    const [isApplied, setIsApplied] = useState(isIntiallyApplied);
-
-    const params = useParams();
-    const jobId = params.id;
-    const dispatch = useDispatch();
-
-    const applyJobHandler = async () => {
-        try {
-            const res = await axios.get(`${APPLICATION_API_END_POINT}/apply/${jobId}`, {withCredentials:true});
-            
-            if(res.data.success){
-                setIsApplied(true); // Update the local state
-                const updatedSingleJob = {...singleJob, applications:[...singleJob.applications,{applicant:user?._id}]}
-                dispatch(setSingleJob(updatedSingleJob)); // helps us to real time UI update
-                toast.success(res.data.message);
-
-            }
-        } catch (error) {
-            console.log(error);
-            toast.error(error.response.data.message);
-        }
-    }
-
-    useEffect(()=>{
-        const fetchSingleJob = async () => {
-            try {
-                const res = await axios.get(`${JOB_API_END_POINT}/get/${jobId}`,{withCredentials:true});
-                if(res.data.success){
-                    dispatch(setSingleJob(res.data.job));
-                    setIsApplied(res.data.job.applications.some(application=>application.applicant === user?._id)) // Ensure the state is in sync with fetched data
-                }
-            } catch (error) {
-                console.log(error);
-            }
-        }
-        fetchSingleJob(); 
-    },[jobId,dispatch, user?._id]);
 
     return (
-        <div className='max-w-7xl mx-auto my-10'>
-            <div className='flex items-center justify-between'>
-                <div>
-                    <h1 className='font-bold text-xl'>{singleJob?.title}</h1>
-                    <div className='flex items-center gap-2 mt-4'>
-                        <Badge className={'text-blue-700 font-bold'} variant="ghost">{singleJob?.postion} Positions</Badge>
-                        <Badge className={'text-[#F83002] font-bold'} variant="ghost">{singleJob?.jobType}</Badge>
-                        <Badge className={'text-[#7209b7] font-bold'} variant="ghost">{singleJob?.salary}LPA</Badge>
+        <div>
+            <Navbar />
+            <div className='max-w-4xl mx-auto bg-white border border-gray-200 rounded-2xl my-5 p-8'>
+                <div className='flex justify-between'>
+                    <div className='flex items-center gap-4'>
+                        <Avatar className="h-24 w-24">
+                            <AvatarImage src="https://www.shutterstock.com/image-vector/circle-line-simple-design-logo-600nw-2174926871.jpg" alt="profile" />
+                        </Avatar>
+                        <div>
+                            <h1 className='font-medium text-xl'>{user?.fullname}</h1>
+                            <p>{user?.profile?.bio}</p>
+                        </div>
+                    </div>
+                    <Button onClick={() => setOpen(true)} className="text-right" variant="outline"><Pen /></Button>
+                </div>
+                <div className='my-5'>
+                    <div className='flex items-center gap-3 my-2'>
+                        <Mail />
+                        <span>{user?.email}</span>
+                    </div>
+                    <div className='flex items-center gap-3 my-2'>
+                        <Contact />
+                        <span>{user?.phoneNumber}</span>
                     </div>
                 </div>
-                <Button
-                onClick={isApplied ? null : applyJobHandler}
-                    disabled={isApplied}
-                    className={`rounded-lg ${isApplied ? 'bg-gray-600 cursor-not-allowed' : 'bg-[#7209b7] hover:bg-[#5f32ad]'}`}>
-                    {isApplied ? 'Already Applied' : 'Apply Now'}
-                </Button>
+                <div className='my-5'>
+                    <h1>Skills</h1>
+                    <div className='flex items-center gap-1'>
+                        {
+                            user?.profile?.skills.length !== 0 ? user?.profile?.skills.map((item, index) => <Badge key={index}>{item}</Badge>) : <span>NA</span>
+                        }
+                    </div>
+                </div>
+                <div className='grid w-full max-w-sm items-center gap-1.5'>
+                    <Label className="text-md font-bold">Resume</Label>
+                    {
+                        isResume ? <a target='blank' href={user?.profile?.resume} className='text-blue-500 w-full hover:underline cursor-pointer'>{user?.profile?.resumeOriginalName}</a> : <span>NA</span>
+                    }
+                </div>
             </div>
-            <h1 className='border-b-2 border-b-gray-300 font-medium py-4'>Job Description</h1>
-            <div className='my-4'>
-                <h1 className='font-bold my-1'>Role: <span className='pl-4 font-normal text-gray-800'>{singleJob?.title}</span></h1>
-                <h1 className='font-bold my-1'>Location: <span className='pl-4 font-normal text-gray-800'>{singleJob?.location}</span></h1>
-                <h1 className='font-bold my-1'>Description: <span className='pl-4 font-normal text-gray-800'>{singleJob?.description}</span></h1>
-                <h1 className='font-bold my-1'>Experience: <span className='pl-4 font-normal text-gray-800'>{singleJob?.experience} yrs</span></h1>
-                <h1 className='font-bold my-1'>Salary: <span className='pl-4 font-normal text-gray-800'>{singleJob?.salary}LPA</span></h1>
-                <h1 className='font-bold my-1'>Total Applicants: <span className='pl-4 font-normal text-gray-800'>{singleJob?.applications?.length}</span></h1>
-                <h1 className='font-bold my-1'>Posted Date: <span className='pl-4 font-normal text-gray-800'>{singleJob?.createdAt.split("T")[0]}</span></h1>
+            <div className='max-w-4xl mx-auto bg-white rounded-2xl'>
+                <h1 className='font-bold text-lg my-5'>Applied Jobs</h1>
+                {/* Applied Job Table   */}
+                <AppliedJobTable />
             </div>
+            <UpdateProfileDialog open={open} setOpen={setOpen}/>
         </div>
     )
 }
 
-export default JobDescription
+export default Profile
