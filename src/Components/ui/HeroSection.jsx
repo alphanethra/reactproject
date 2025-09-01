@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Button } from './ui/button'
+import { Button } from './button'
 import { Search } from 'lucide-react'
 import { useDispatch } from 'react-redux';
 import { setSearchedQuery } from '@/redux/jobSlice';
